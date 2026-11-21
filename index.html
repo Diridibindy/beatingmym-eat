@@ -16,7 +16,6 @@
     padding: 18px;
     background: #0b0b0d;
   }
-  /* Twitter renders its iframe at 550px; let it shrink on phones */
   .embed { width: 100%; max-width: 550px; }
   .embed .twitter-tweet-rendered,
   .embed iframe { width: 100% !important; margin: 0 !important; }
@@ -29,17 +28,6 @@
       <a href="https://x.com/boof_cart/status/1998203686808629523">Found it lmao</a>
     </blockquote>
   </div>
-
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-  <script>
-    // only if the widget cannot load at all: swap in a plain link instead of an empty page
-    setTimeout(function () {
-      var box = document.getElementById('embed');
-      if (!box.querySelector('iframe') && !box.querySelector('.twitter-tweet-rendered')) {
-        box.innerHTML = '<a href="https://x.com/boof_cart/status/1998203686808629523" '
-          + 'style="color:#8f8b86;font:14px system-ui,sans-serif;text-decoration:none">open the post on X</a>';
-      }
-    }, 8000);
-  </script>
 </body>
 </html>
