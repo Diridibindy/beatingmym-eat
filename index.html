@@ -4,102 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>the dough video</title>
-<meta name="description" content="The dough-kitchen video, embedded.">
 <meta name="theme-color" content="#0b0b0d">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥣</text></svg>">
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
   html, body { min-height: 100%; }
-  body { min-height: 100dvh; }
   body {
     margin: 0;
+    min-height: 100dvh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: safe center;
-    gap: 22px;
-    padding: 40px 18px;
-    background: radial-gradient(1200px 700px at 50% -10%, #1b1b22 0%, #0b0b0d 60%, #070708 100%);
-    color: #e8e6e3;
-    font-family: ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    text-align: center;
+    align-items: safe center;
+    justify-content: center;
+    padding: 18px;
+    background: #0b0b0d;
   }
-  header h1 {
-    margin: 0 0 6px;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    font-weight: 650;
-    letter-spacing: -0.02em;
-  }
-  header p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #8f8b86;
-    max-width: 46ch;
-    line-height: 1.5;
-  }
-  .card {
-    width: 100%;
-    max-width: 560px;
-    border-radius: 18px;
-    overflow: hidden;
-    background: #16161a;
-    border: 1px solid #26262c;
-    box-shadow: 0 24px 60px -24px rgba(0,0,0,.8);
-  }
-  /* Twitter's iframe renders at 550px wide on desktop */
-  .card .twitter-tweet-rendered, .card iframe { width: 100% !important; margin: 0 !important; }
-  .card .twitter-tweet { margin: 0 auto; }
-  .loading {
-    padding: 60px 20px;
-    font-size: .85rem;
-    color: #6f6b66;
-    letter-spacing: .02em;
-  }
-  footer {
-    font-size: .78rem;
-    color: #6c6863;
-  }
-  footer a { color: #a9a49e; text-decoration: none; border-bottom: 1px solid #3a3a42; }
-  footer a:hover { color: #fff; border-color: #fff; }
+  /* Twitter renders its iframe at 550px; let it shrink on phones */
+  .embed { width: 100%; max-width: 550px; }
+  .embed .twitter-tweet-rendered,
+  .embed iframe { width: 100% !important; margin: 0 !important; }
+  .embed .twitter-tweet { margin: 0 !important; }
 </style>
 </head>
 <body>
-  <header>
-    <h1>the dough video</h1>
-    <p>Guy, dough, commercial kitchen, and a slow-mo edit that fights the fast-forward.</p>
-  </header>
-
-  <div class="card" id="embed">
-    <div class="loading" id="loading">loading the post…</div>
+  <div class="embed" id="embed">
     <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
       <a href="https://x.com/boof_cart/status/1998203686808629523">Found it lmao</a>
     </blockquote>
   </div>
 
-  <footer>
-    posted by <a href="https://x.com/boof_cart">@boof_cart</a> · original by
-    <a href="https://www.tiktok.com/@outbackrak">@outbackrak</a>
-  </footer>
-
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   <script>
-    (function () {
-      var loading = document.getElementById('loading');
-      var done = false;
-      function hide() { if (!done) { done = true; loading.style.display = 'none'; } }
-      // widgets.js replaces the blockquote with an iframe; watch for it
-      new MutationObserver(function () {
-        if (document.querySelector('#embed iframe')) hide();
-      }).observe(document.getElementById('embed'), { childList: true, subtree: true });
-      // if the widget cannot load (blocked/offline), show the link instead
-      setTimeout(function () {
-        if (!document.querySelector('#embed iframe')) {
-          loading.innerHTML = 'Embed blocked — <a href="https://x.com/boof_cart/status/1998203686808629523" style="color:#a9a49e">open the post on X</a>';
-        }
-      }, 8000);
-    })();
+    // only if the widget cannot load at all: swap in a plain link instead of an empty page
+    setTimeout(function () {
+      var box = document.getElementById('embed');
+      if (!box.querySelector('iframe') && !box.querySelector('.twitter-tweet-rendered')) {
+        box.innerHTML = '<a href="https://x.com/boof_cart/status/1998203686808629523" '
+          + 'style="color:#8f8b86;font:14px system-ui,sans-serif;text-decoration:none">open the post on X</a>';
+      }
+    }, 8000);
   </script>
 </body>
 </html>
